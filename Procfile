@@ -1,0 +1,1 @@
+web: gunicorn imbd.wsgi --preload --log-file=-

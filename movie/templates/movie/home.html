@@ -1,0 +1,76 @@
+{% extends "movie/base.html" %}
+{% load static%}
+{% block content%}   
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    
+    <div class="carousel-inner" style="background-color: #777;">
+      {% for items in data %}
+      <div class="carousel-item {% if forloop.first %} active {% endif %} ">
+          <div class="d-flex justify-content-center ">
+            <img class="first-slide" src="{{items.Poster}}" alt="First slide">
+          </div>
+        <div class="container">
+          <div class="carousel-caption text-left">
+            <h1>{{items.Title}}</h1>
+            <p>{{items.Plot}}</p>
+            {% if user.is_authenticated %}
+              <p></p>
+            {% else %}
+                <p><a class="btn btn-lg btn-primary" href="{% url 'register' %}"" role="button">Sign up today</a></p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor%}
+      
+    </div>
+  
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+  <div class="container marketing">
+
+
+    
+
+
+    <!-- START THE FEATURETTES -->
+
+ {% for item_news in movie %}
+ 
+    <hr class="featurette-divider">
+    
+    <div class="row featurette">
+      <div class="col-md-7 {% if forloop.counter|divisibleby:2 %} {% else %}order-md-2{% endif %}">
+        <h2 class="featurette-heading">{{item_news.title}} <span class="text-muted">{{item_news.publishedAt}}.</span></h2>
+        <p class="lead">{{item_news.content}}</p> <span><a href="{{item_news.url}}">more</a></span>
+      </div>
+      <div class="col-md-5 {% if forloop.counter|divisibleby:2 %} {% else %}order-md-1{% endif %}">
+        <img class="featurette-image img-fluid mx-auto" src="{{item_news.urlToImage}}" alt="Generic placeholder image">
+      </div>
+    </div>
+  
+  {% endfor %}
+
+ 
+ 
+
+  
+
+    <!-- /END THE FEATURETTES -->
+
+  </div><!-- /.container -->
+
+{% endblock %}
